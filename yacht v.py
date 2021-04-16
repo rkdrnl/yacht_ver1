@@ -62,6 +62,7 @@ clickexit_img = pygame.image.load(r"C:\Users\user\Pictures\pygameimage\clickedex
 dicelist_img = pygame.image.load(r"C:\Users\user\Pictures\pygameimage\dicelist.png")
 screenblind_img = pygame.image.load(r"C:\Users\user\Pictures\pygameimage\screenblind.png")
 turnover_img = pygame.image.load(r"C:\Users\user\Pictures\pygameimage\turnover.png")
+choosescore_img = pygame.image.load(r"C:\Users\user\Pictures\pygameimage\choosescore.png")
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -72,7 +73,8 @@ sumwidth = 10
 rolled = 0
 choosing = 0
 turn = 0
-
+whoturn = 2
+chsum = 0
 ###########################변수 지정####################################
                                
 pygame.display.set_caption("yacht!")
@@ -120,10 +122,18 @@ def player_turn():
         pygame.display.update()
         clock.tick(150)
 
+def whoturndef():
+    global whoturn
+    if whoturn == 1:
+        whoturn = 2
+        return
+    if whoturn == 2:
+        whoturn = 1
     
 
 def pedigree():
-    print("pedigree")
+    global chsum
+    chooseButton_1 = Button(choosescore_img,chsum,251,200,50,choosescore_img,chsum,251,pedigree)
 def diceroll():
     global sumwidth
     time.sleep(1)  
@@ -262,6 +272,7 @@ def lobbymenu():
     selectlist = [1,1,1,1,1]
     turn = 0
     rolled = 0
+    whoturn = 2
     player_1_name = ""
     player_2_name = ""
     input_box = pygame.Rect(240, 370, 140, 32)
@@ -358,6 +369,14 @@ def lobbymenu():
         clock.tick(15)
 
 def gamestartscreen():
+    global player_1_name
+    global player_2_name
+    global Drollist
+    global sumwidth
+    global rolled
+    global turn
+    global whoturn
+    global chsum
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT + 200))
     SCREEN.fill(white)
     turnsum = 65
@@ -369,13 +388,11 @@ def gamestartscreen():
 
     p1_score_select = 0
     p2_score_select = 0
+    
+    whoturndef()
+    print(whoturn)
 ###########################################################
-    global player_1_name
-    global player_2_name
-    global Drollist
-    global sumwidth
-    global rolled
-    global turn
+    
     oneroll = False
     oneroll2 = False
     gamestart = True
@@ -398,6 +415,11 @@ def gamestartscreen():
             oneroll2 = True
         if turn > 9:
             turnsum = 35
+
+        if whoturn == 1:
+            chsum = 501.5
+        elif whoturn == 2:
+            chsum = 647
         player_1_scoretext = mfont.render(str(p1_score),True,gray)
         player_2_scoretext = mfont.render(str(p2_score),True,red)
         turn12text = bbfont.render("/12",True,black)
@@ -442,10 +464,13 @@ def gamestartscreen():
             
         if rolled < 3:
             rerollButton = Button(reroll_img,50,215,200,50,clickreroll_img,50,214,gamestartscreen)
+            pedigree()
             keep()
+            
         if rolled > 2:
-            print("done")
+            pedigree()
             turnoverButton = Button(turnover_img,30,210,200,50,turnover_img,30,210,gamestartscreen)
+            chooseButton_1 = Button(choosescore_img,chsum,251,200,50,choosescore_img,chsum,251,pedigree)
         pygame.display.update()
         clock.tick(15)
         
