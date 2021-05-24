@@ -78,8 +78,8 @@ p2_subtotal = 0
 sumwidth = 10
 rolled = 0
 choosing = 0
-turn = 0
-whoturn = 2
+turn = 1
+whoturn = 1
 chsum = 0
 var_aces = 0
 var_deuces = 0
@@ -157,9 +157,16 @@ class chooseButton:
 
 
 def player_turn():
+    global whoturn
+    if whoturn == 1:
+        wp = player_1_name
+        wc = black
+    elif whoturn == 2:
+        wp = player_2_name
+        wc = red
     time.sleep(1.5)
     sumptext = 800
-    ptext = bbfont.render(str(player_1_name + "'s turn"),True,black)
+    ptext = bbfont.render(str(wp + "'s turn"),True,wc)
     while sumptext + 650:
         SCREEN.blit(screenblind_img,(sumptext, 20))
         SCREEN.blit(ptext,(sumptext, 50))
@@ -169,11 +176,13 @@ def player_turn():
 
 def whoturndef():
     global whoturn
+    global turn
     if whoturn == 1:
         whoturn = 2
         return
     if whoturn == 2:
         whoturn = 1
+        turn = turn + 1
 
 def showscore():
     global Drollist
@@ -196,31 +205,37 @@ def showscore():
         aces_text = sfont.render(str(var_aces),True,red)
     elif pedigreelist[0] != 1:
         aces_text = sfont.render(str(0),True,black)
+        var_aces = 0
 
     if pedigreelist[1] == 1:
         deuces_text = sfont.render(str(var_deuces),True,red)
     elif pedigreelist[1] != 1:
         deuces_text = sfont.render(str(0),True,black)
+        var_deuces = 0
 
     if pedigreelist[2] == 1:
         threes_text = sfont.render(str(var_threes),True,red)
     elif pedigreelist[2] != 1:
         threes_text = sfont.render(str(0),True,black)
+        var_threes = 0
 
     if pedigreelist[3] == 1:
         fours_text = sfont.render(str(var_fours),True,red)
     elif pedigreelist[3] != 1:
         fours_text = sfont.render(str(0),True,black)
+        var_fours = 0
 
     if pedigreelist[4] == 1:
         fives_text = sfont.render(str(var_fives),True,red)
     elif pedigreelist[4] != 1:
         fives_text = sfont.render(str(0),True,black)
+        var_fives = 0
 
     if pedigreelist[5] == 1:
         sixes_text = sfont.render(str(var_sixes),True,red)
     elif pedigreelist[5] != 1:
         sixes_text = sfont.render(str(0),True,black)
+        var_sixes = 0
 
 
 
@@ -228,31 +243,37 @@ def showscore():
         choise_text = sfont.render(str(var_choise),True,red)
     elif pedigreelist[6] != 1:
         choise_text = sfont.render(str(0),True,black)
+        var_choise = 0
 
     if pedigreelist[7] == 1:
         four_kind_text = sfont.render(str(var_4_kind),True,red)
     elif pedigreelist[7] != 1:
         four_kind_text = sfont.render(str(0),True,black)
+        var_4_kind = 0
 
     if pedigreelist[8] == 1:
         full_house_text = sfont.render(str(var_full_house),True,red)
     elif pedigreelist[8] != 1:
         full_house_text = sfont.render(str(0),True,black)
+        var_full_house = 0
 
     if pedigreelist[9] == 1:
         s_straight_text = sfont.render(str(var_s_straight),True,red)
     elif pedigreelist[9] != 1:
         s_straight_text = sfont.render(str(0),True,black)
+        var_s_straight = 0
 
     if pedigreelist[10] == 1:
         l_straight_text = sfont.render(str(var_l_straight),True,red)
     elif pedigreelist[10] != 1:
         l_straight_text = sfont.render(str(0),True,black)
+        var_l_straight = 0
 
     if pedigreelist[11] == 1:
         yacht_text = sfont.render(str(var_yacht),True,red)
     elif pedigreelist[11] != 1:
         yacht_text = sfont.render(str(0),True,black)
+        var_yacht = 0
 
     
 
@@ -266,7 +287,7 @@ def showscore():
     SCREEN.blit(choise_text, (pedsum, 526))
     SCREEN.blit(four_kind_text, (pedsum, 573))
     SCREEN.blit(full_house_text, (pedsum, 617))
-    SCREEN.blit(s_straight_text, (pedsum, 660))
+    SCREEN.blit(s_straight_text, (pedsum, 663))
     SCREEN.blit(l_straight_text, (pedsum, 707))
     SCREEN.blit(yacht_text, (pedsum, 755))
 
@@ -423,27 +444,27 @@ def pedigree():
             pedigreelist[5] = 1
 
     if Drollist.count(1) >= 4:  # 4_of_kind
-        var_4_kind = 4
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki1")
         pedigreelist[7] = 1
     if Drollist.count(2) >= 4:
-        var_4_kind = 8
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki2")
         pedigreelist[7] = 1
     if Drollist.count(3) >= 4:
-        var_4_kind = 12
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki3")
         pedigreelist[7] = 1
     if Drollist.count(4) >= 4:
-        var_4_kind = 16
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki4")
         pedigreelist[7] = 1
     if Drollist.count(5) >= 4:
-        var_4_kind = 20
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki5")
         pedigreelist[7] = 1
     if Drollist.count(6) >= 4:
-        var_4_kind = 24
+        var_4_kind = Drollist[0] + Drollist[1] + Drollist[2] + Drollist[3] + Drollist[4]
         print("ki6")
         pedigreelist[7] = 1
     j = 1
@@ -538,23 +559,176 @@ def selected():
     global p1_score
     global p2_score
     global che
+    global rolled
 
 
     if che == 1: 
         if whoturn == 1:
             SCREEN.blit(scoreblind_img, (200, 320))
             p1_score = p1_score + var_aces
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
         elif whoturn == 2:
             SCREEN.blit(scoreblind_img, (200, 585))
             p2_score = p2_score + var_aces
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
     
     if che == 2: 
         if whoturn == 1:
             SCREEN.blit(scoreblind_img, (200, 320))
             p1_score = p1_score + var_deuces
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
         elif whoturn == 2:
             SCREEN.blit(scoreblind_img, (200, 585))
             p2_score = p2_score + var_deuces
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 3: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_threes
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_threes
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 4: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_fours
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_fours
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 5: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_fives
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_fives
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 6: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_sixes
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_sixes
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 7: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_choise
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_choise
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 8: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_4_kind
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_4_kind
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 9: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_full_house
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_full_house
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 10: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_s_straight
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_s_straight
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 11: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_l_straight
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_l_straight
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+
+    if che == 12: 
+        if whoturn == 1:
+            SCREEN.blit(scoreblind_img, (200, 320))
+            p1_score = p1_score + var_yacht
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
+        elif whoturn == 2:
+            SCREEN.blit(scoreblind_img, (200, 585))
+            p2_score = p2_score + var_yacht
+            rolled = 0
+            whoturndef()
+            gamestartscreen()
 
 
         
@@ -706,9 +880,8 @@ def lobbymenu():
     global turn
     global selectlist
     selectlist = [1,1,1,1,1]
-    turn = 0
+    turn = 1
     rolled = 0
-    whoturn = 1
     player_1_name = ""
     player_2_name = ""
     input_box = pygame.Rect(240, 370, 140, 32)
@@ -817,15 +990,12 @@ def gamestartscreen():
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT + 200))
     SCREEN.fill(white)
     turnsum = 65
-    
-    whoturndef()
 
 ###########################################################
     
     oneroll = False
     oneroll2 = False
     gamestart = True
-    turn = turn + 1
     while gamestart == True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -900,6 +1070,18 @@ def gamestartscreen():
             pedigreelist[9] = 0
             pedigreelist[10] = 0
             pedigreelist[11] = 0
+            var_aces = 0 
+            var_deuces = 0 
+            var_threes = 0 
+            var_fours = 0 
+            var_fives = 0 
+            var_sixes = 0 
+            var_choise = 0 
+            var_4_kind = 0 
+            var_full_house = 0 
+            var_s_straight = 0 
+            var_l_straight = 0 
+            var_yacht = 0 
             player_turn()
             diceroll()
             pedigree()
@@ -907,6 +1089,7 @@ def gamestartscreen():
             print(var_full_house)
             print(pedigreelist)
             rolled = rolled + 1
+            print(rolled)
             oneroll = True
             
         if rolled < 3:
