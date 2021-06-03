@@ -72,6 +72,8 @@ selectlist = [1,1,1,1,1]
 pedigreelist = [0,0,0,0,0,0,0,0,0,0,0,0]
 p1_scoredlist = [0,0,0,0,0,0,0,0,0,0,0,0]
 p2_scoredlist = [0,0,0,0,0,0,0,0,0,0,0,0]
+p1_last = [0,0,0,0,0,0,0,0,0,0,0,0]
+p2_last = [0,0,0,0,0,0,0,0,0,0,0,0]
 che = 0
 p1_score = 0
 p2_score = 0
@@ -95,6 +97,7 @@ var_full_house = 0
 var_s_straight = 0
 var_l_straight = 0
 var_yacht = 0
+winnertext = mfont.render(str(0),True,black)
 aces_text = sfont.render(str(0),True,black)
 deuces_text = sfont.render(str(0),True,black)
 threes_text = sfont.render(str(0),True,black)
@@ -157,6 +160,7 @@ class chooseButton:
         
 
 ##################################################
+        
 
 
 def player_turn():
@@ -182,16 +186,21 @@ def whoturndef():
     global turn
     global p1_scoredlist
     global p2_scoredlist
+    global p1_socre
+    global p2_score
+    global player_1_name
+    global player_2_name
     if whoturn == 1:
         whoturn = 2
         return
     if whoturn == 2:
         whoturn = 1
         turn = turn + 1
-        
-        
+        if turn > 12:
+            lobbymenu()
+            
+
     
-        
 
 def showscore():
     global Drollist
@@ -287,35 +296,59 @@ def showscore():
         var_yacht = 0
 
     if whoturn == 1:
-        SCREEN.blit(aces_text, (560, 258))
-        SCREEN.blit(deuces_text, (560, 302))
-        SCREEN.blit(threes_text, (560, 348))
-        SCREEN.blit(fours_text, (560, 394))
-        SCREEN.blit(fives_text, (560, 436))
-        SCREEN.blit(sixes_text, (560, 482))
+        if p1_scoredlist[0] == 0:
+            SCREEN.blit(aces_text, (560, 258))
+        if p1_scoredlist[1] == 0:
+            SCREEN.blit(deuces_text, (560, 302))
+        if p1_scoredlist[2] == 0:
+            SCREEN.blit(threes_text, (560, 348))
+        if p1_scoredlist[3] == 0:
+            SCREEN.blit(fours_text, (560, 394))
+        if p1_scoredlist[4] == 0:
+            SCREEN.blit(fives_text, (560, 436))
+        if p1_scoredlist[5] == 0:
+            SCREEN.blit(sixes_text, (560, 482))
 
-        SCREEN.blit(choise_text, (560, 526))
-        SCREEN.blit(four_kind_text, (560, 573))
-        SCREEN.blit(full_house_text, (560, 617))
-        SCREEN.blit(s_straight_text, (560, 663))
-        SCREEN.blit(l_straight_text, (560, 707))
-        SCREEN.blit(yacht_text, (560, 755))
+        if p1_scoredlist[6] == 0:
+            SCREEN.blit(choise_text, (560, 526))
+        if p1_scoredlist[7] == 0:
+            SCREEN.blit(four_kind_text, (560, 573))
+        if p1_scoredlist[8] == 0:
+            SCREEN.blit(full_house_text, (560, 617))
+        if p1_scoredlist[9] == 0:
+            SCREEN.blit(s_straight_text, (560, 663))
+        if p1_scoredlist[10] == 0:
+            SCREEN.blit(l_straight_text, (560, 707))
+        if p1_scoredlist[11] == 0:
+            SCREEN.blit(yacht_text, (560, 755))
 
     
     if whoturn == 2:
-        SCREEN.blit(aces_text, (708, 258))
-        SCREEN.blit(deuces_text, (708, 302))
-        SCREEN.blit(threes_text, (708, 348))
-        SCREEN.blit(fours_text, (708, 394))
-        SCREEN.blit(fives_text, (708, 436))
-        SCREEN.blit(sixes_text, (708, 482))
+        if p2_scoredlist[0] == 0:
+            SCREEN.blit(aces_text, (708, 258))
+        if p2_scoredlist[1] == 0:
+            SCREEN.blit(deuces_text, (708, 302))
+        if p2_scoredlist[2] == 0:
+            SCREEN.blit(threes_text, (708, 348))
+        if p2_scoredlist[3] == 0:
+            SCREEN.blit(fours_text, (708, 394))
+        if p2_scoredlist[4] == 0:
+            SCREEN.blit(fives_text, (708, 436))
+        if p2_scoredlist[5] == 0:
+            SCREEN.blit(sixes_text, (708, 482))
 
-        SCREEN.blit(choise_text, (708, 526))
-        SCREEN.blit(four_kind_text, (708, 573))
-        SCREEN.blit(full_house_text, (708, 617))
-        SCREEN.blit(s_straight_text, (708, 663))
-        SCREEN.blit(l_straight_text, (708, 707))
-        SCREEN.blit(yacht_text, (708, 755))
+        if p2_scoredlist[6] == 0:
+            SCREEN.blit(choise_text, (708, 526))
+        if p2_scoredlist[7] == 0:
+            SCREEN.blit(four_kind_text, (708, 573))
+        if p2_scoredlist[8] == 0:
+            SCREEN.blit(full_house_text, (708, 617))
+        if p2_scoredlist[9] == 0:
+            SCREEN.blit(s_straight_text, (708, 663))
+        if p2_scoredlist[10] == 0:
+            SCREEN.blit(l_straight_text, (708, 707))
+        if p2_scoredlist[11] == 0:
+            SCREEN.blit(yacht_text, (708, 755))
 
 
 def pedigree():
@@ -787,15 +820,192 @@ def selected():
 
 def scored():
     global var_aces
+    global var_deuces 
+    global var_threes 
+    global var_fours 
+    global var_fives 
+    global var_sixes 
+    global var_choise 
+    global var_4_kind 
+    global var_full_house 
+    global var_s_straight 
+    global var_l_straight 
+    global var_yacht 
     global p1_scoredlist
     global p2_scoredlist 
     global whoturn
-    aces_text = sfont.render(str(var_aces),True,green)
+    global p1_last
+    global p2_last
+    global turn
 
+    if p1_scoredlist[0] == 1:
+        p1_last[0] = var_aces
+        p1_scoredlist[0] = 2
+    if p2_scoredlist[0] == 1:
+        p2_last[0] = var_aces
+        p2_scoredlist[0] = 2
 
+    if p1_scoredlist[1] == 1:
+        p1_last[1] = var_deuces
+        p1_scoredlist[1] = 2
+    if p2_scoredlist[1] == 1:
+        p2_last[1] = var_deuces
+        p2_scoredlist[1] = 2
 
+    if p1_scoredlist[2] == 1:
+        p1_last[2] = var_threes
+        p1_scoredlist[2] = 2
+    if p2_scoredlist[2] == 1:
+        p2_last[2] = var_threes
+        p2_scoredlist[2] = 2
+
+    if p1_scoredlist[3] == 1:
+        p1_last[3] = var_fours
+        p1_scoredlist[3] = 2
+    if p2_scoredlist[3] == 1:
+        p2_last[3] = var_fours
+        p2_scoredlist[3] = 2
+
+    if p1_scoredlist[4] == 1:
+        p1_last[4] = var_fives
+        p1_scoredlist[4] = 2
+    if p2_scoredlist[4] == 1:
+        p2_last[4] = var_fives
+        p2_scoredlist[4] = 2
+
+    if p1_scoredlist[5] == 1:
+        p1_last[5] = var_sixes
+        p1_scoredlist[5] = 2
+    if p2_scoredlist[5] == 1:
+        p2_last[5] = var_sixes
+        p2_scoredlist[5] = 2
+
+    if p1_scoredlist[6] == 1:
+        p1_last[6] = var_choise
+        p1_scoredlist[6] = 2
+    if p2_scoredlist[6] == 1:
+        p2_last[6] = var_choise
+        p2_scoredlist[6] = 2
+
+    if p1_scoredlist[7] == 1:
+        p1_last[7] = var_4_kind
+        p1_scoredlist[7] = 2
+    if p2_scoredlist[7] == 1:
+        p2_last[7] = var_4_kind
+        p2_scoredlist[7] = 2
+
+    if p1_scoredlist[8] == 1:
+        p1_last[8] = var_full_house
+        p1_scoredlist[8] = 2
+    if p2_scoredlist[8] == 1:
+        p2_last[8] = var_full_house
+        p2_scoredlist[8] = 2
+
+    if p1_scoredlist[9] == 1:
+        p1_last[9] = var_s_straight
+        p1_scoredlist[9] = 2
+    if p2_scoredlist[9] == 1:
+        p2_last[9] = var_s_straight
+        p2_scoredlist[9] = 2
+
+    if p1_scoredlist[10] == 1:
+        p1_last[10] = var_l_straight
+        p1_scoredlist[10] = 2
+    if p2_scoredlist[10] == 1:
+        p2_last[10] = var_l_straight
+        p2_scoredlist[10] = 2
+
+    if p1_scoredlist[11] == 1:
+        p1_last[11] = var_yacht
+        p1_scoredlist[11] = 2
+    if p2_scoredlist[11] == 1:
+        p2_last[11] = var_yacht
+        p2_scoredlist[11] = 2
+
+    if turn > 1:
+        if p1_scoredlist[0] == 2:
+            aces_text = sfont.render(str(p1_last[0]),True,green)
+            SCREEN.blit(aces_text, (560, 258))
+        if p2_scoredlist[0] == 2:
+            aces_text = sfont.render(str(p2_last[0]),True,green)
+            SCREEN.blit(aces_text, (708, 258))
+
+        if p1_scoredlist[1] == 2:
+            deuces_text = sfont.render(str(p1_last[1]),True,green)
+            SCREEN.blit(deuces_text, (560, 302))
+        if p2_scoredlist[1] == 2:
+            deuces_text = sfont.render(str(p2_last[1]),True,green)
+            SCREEN.blit(deuces_text, (708, 302))
+
+        if p1_scoredlist[2] == 2:
+            threes_text = sfont.render(str(p1_last[2]),True,green)
+            SCREEN.blit(threes_text, (560, 348))
+        if p2_scoredlist[2] == 2:
+            threes_text = sfont.render(str(p2_last[2]),True,green)
+            SCREEN.blit(threes_text, (708, 348))
+
+        if p1_scoredlist[3] == 2:
+            fours_text = sfont.render(str(p1_last[3]),True,green)
+            SCREEN.blit(fours_text, (560, 394))
+        if p2_scoredlist[3] == 2:
+            fours_text = sfont.render(str(p2_last[3]),True,green)
+            SCREEN.blit(fours_text, (708, 394))
+
+        if p1_scoredlist[4] == 2:
+            fives_text = sfont.render(str(p1_last[4]),True,green)
+            SCREEN.blit(fives_text, (560, 438))
+        if p2_scoredlist[4] == 2:
+            fives_text = sfont.render(str(p2_last[4]),True,green)
+            SCREEN.blit(fives_text, (708, 438))
+
+        if p1_scoredlist[5] == 2:
+            sixes_text = sfont.render(str(p1_last[5]),True,green)
+            SCREEN.blit(sixes_text, (560, 482))
+        if p2_scoredlist[5] == 2:
+            sixes_text = sfont.render(str(p2_last[5]),True,green)
+            SCREEN.blit(sixes_text, (708, 482))
         
-        
+        if p1_scoredlist[6] == 2:
+            choise_text = sfont.render(str(p1_last[6]),True,green)
+            SCREEN.blit(choise_text, (560, 526))
+        if p2_scoredlist[6] == 2:
+            choise_text = sfont.render(str(p2_last[6]),True,green)
+            SCREEN.blit(choise_text, (708, 526))
+
+        if p1_scoredlist[7] == 2:
+            four_kind_text = sfont.render(str(p1_last[7]),True,green)
+            SCREEN.blit(four_kind_text, (560, 573))
+        if p2_scoredlist[7] == 2:
+            four_kind_text = sfont.render(str(p2_last[7]),True,green)
+            SCREEN.blit(four_kind_text, (708, 573))
+
+        if p1_scoredlist[8] == 2:
+            fullhouse_text = sfont.render(str(p1_last[8]),True,green)
+            SCREEN.blit(fullhouse_text, (560, 617))
+        if p2_scoredlist[8] == 2:
+            fullhouse_text = sfont.render(str(p2_last[8]),True,green)
+            SCREEN.blit(fullhouse_text, (708, 617))
+
+        if p1_scoredlist[9] == 2:
+            s_straight_text = sfont.render(str(p1_last[9]),True,green)
+            SCREEN.blit(s_straight_text, (560, 663))
+        if p2_scoredlist[9] == 2:
+            s_straight_text = sfont.render(str(p2_last[9]),True,green)
+            SCREEN.blit(s_straight_text, (708, 663))
+
+        if p1_scoredlist[10] == 2:
+            l_straight_text = sfont.render(str(p1_last[10]),True,green)
+            SCREEN.blit(l_straight_text, (560, 707))
+        if p2_scoredlist[10] == 2:
+            l_straight_text = sfont.render(str(p2_last[10]),True,green)
+            SCREEN.blit(l_straight_text, (708, 707))
+
+        if p1_scoredlist[11] == 2:
+            yacht_text = sfont.render(str(p1_last[11]),True,green)
+            SCREEN.blit(yacht_text, (560, 755))
+        if p2_scoredlist[11] == 2:
+            yacht_text = sfont.render(str(p2_last[11]),True,green)
+            SCREEN.blit(yacht_text, (708, 755))
 
 
 def showped():
@@ -909,6 +1119,7 @@ def keep():
         checkeep = checkeep + 1
         sumwidth = sumwidth + 160
         sumkeep = sumkeep + 1
+
 def keeping():
     global sumkeep
     if sumkeep == 1:
@@ -988,9 +1199,17 @@ def lobbymenu():
     global p1_score
     global p2_score
     global whoturn
+    global p1_scoredlist
+    global p2_scoredlist
+    global p1_last
+    global p2_last
     whoturn = 1
     p1_score = 0
     p2_score = 0
+    p1_scoredlist = [0,0,0,0,0,0,0,0,0,0,0,0]
+    p2_scoredlist = [0,0,0,0,0,0,0,0,0,0,0,0]
+    p1_last = [0,0,0,0,0,0,0,0,0,0,0,0]
+    p2_last = [0,0,0,0,0,0,0,0,0,0,0,0]
     selectlist = [1,1,1,1,1]
     turn = 1
     rolled = 0
@@ -1039,7 +1258,7 @@ def lobbymenu():
                         inputbox_color = red
 
 ######################################################################################## player 2 input box
-                        
+                   
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if input_box2.collidepoint(event.pos):
                     inputbox_active2 = not inputbox_active2
@@ -1065,9 +1284,7 @@ def lobbymenu():
                     if inputbox_text2 != "" and inputbox_saved2 == 0:
                         inputbox_color2 = red
 
-                        
-                    
-        SCREEN.fill(white)
+        SCREEN.fill(white)               
         inputbox_txt_surface = font.render(inputbox_text, True, inputbox_color)
         inputbox_width = max(200, inputbox_txt_surface.get_width()+10)
         input_box.w = inputbox_width
@@ -1099,6 +1316,16 @@ def gamestartscreen():
     global whoturn
     global chsum
     global pedsum
+    global p1_last
+    global p2_last
+    global p1_score
+    global p2_score
+    if p1_last[0] + p1_last[1] + p1_last[2] + p1_last[3] + p1_last[4] + p1_last[5] > 62:
+        print("ppp1")
+        p1_score = p1_score + 35
+    elif p2_last[0] + p2_last[1] + p2_last[2] + p2_last[3] + p2_last[4] + p2_last[5] > 62:
+        print("ppp2")
+        p2_score = p2_score + 35
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT + 200))
     SCREEN.fill(white)
     turnsum = 65
